@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="view_giai_trinh_di_muon_tree" model="ir.ui.view">
+        <field name="name">hr.giai.trinh.di.muon.tree</field>
+        <field name="model">hr.giai.trinh.di.muon</field>
+        <field name="arch" type="xml">
+
+            <tree string="Giải trình chấm công">
+
+                <field name="nhan_vien_id"/>
+                <field name="ngay_giai_trinh"/>
+                <field name="loai_vi_pham"/>
+                <field name="so_phut_di_muon"/>
+                <field name="so_phut_ve_som"/>
+                <field name="ly_do"/>
+                <field name="trang_thai"/>
+                <field name="nguoi_duyet_id"/>
+
+            </tree>
+
+        </field>
+    </record>
+
+
+    <record id="view_giai_trinh_di_muon_form" model="ir.ui.view">
+        <field name="name">hr.giai.trinh.di.muon.form</field>
+        <field name="model">hr.giai.trinh.di.muon</field>
+        <field name="arch" type="xml">
+            <form string="Giải trình chấm công">
+                <header>
+                <button
+                    name="action_xac_nhan"
+                    string="Xác nhận"
+                    type="object"
+                    class="oe_highlight"
+                    groups="hr_data_analysis.group_hr_data_analysis_manager"
+                    attrs="{'invisible': [('trang_thai', '!=', 'cho_xac_nhan')]}"/>
+
+                <button
+                    name="action_tu_choi"
+                    string="Từ chối"
+                    type="object"
+                    groups="hr_data_analysis.group_hr_data_analysis_manager"
+                    attrs="{'invisible': [('trang_thai', '!=', 'cho_xac_nhan')]}"/>
+
+                <field
+                    name="trang_thai"
+                    widget="statusbar"
+                    statusbar_visible="cho_xac_nhan,da_xac_nhan,tu_choi"/>
+
+            </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="nhan_vien_id"/>
+                            <field name="ngay_giai_trinh"/>
+                            <field name="loai_vi_pham"/>
+                            <field name="so_phut_di_muon"/>
+                            <field name="so_phut_ve_som"/>
+                        </group>
+                        <group>
+                            <field name="cham_cong_id"/>
+                            <field name="ngay_tao"/>
+                        </group>
+                    </group>
+                    <group string="Nội dung giải trình">
+                        <field name="ly_do"/>
+                        <field name="minh_chung_ids" widget="many2many_binary"/>
+                    </group>
+                    <group string="Xử lý" groups="hr_data_analysis.group_hr_data_analysis_manager">
+                        <field name="ly_do_tu_choi" attrs="{'required': [('trang_thai', '=', 'tu_choi')]}"/>
+                        <field name="nguoi_duyet_id"/>
+                        <field name="ngay_duyet"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_giai_trinh_di_muon" model="ir.actions.act_window">
+        <field name="name">Giải trình chấm công</field>
+        <field name="res_model">hr.giai.trinh.di.muon</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem
+        id="menu_giai_trinh_di_muon"
+        name="Giải trình chấm công"
+        action="action_giai_trinh_di_muon"
+        sequence="30"/>
+</odoo>

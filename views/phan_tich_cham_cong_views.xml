@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_attendance_alert_search_analysis" model="ir.ui.view">
+        <field name="name">hr.attendance.alert.search.analysis</field>
+        <field name="model">hr.attendance.alert</field>
+        <field name="arch" type="xml">
+            <search string="Phân tích rủi ro chấm công">
+                <field name="employee_id"/>
+                <field name="department_id"/>
+                <field name="risk_level"/>
+                <filter string="Rủi ro cao" name="high_risk" domain="[('risk_level', '=', 'high')]"/>
+                <filter string="Chưa xử lý" name="new" domain="[('state', '=', 'new')]"/>
+                <group expand="0" string="Nhóm theo">
+                    <filter string="Phòng ban" name="department" context="{'group_by': 'department_id'}"/>
+                    <filter string="Nhân viên" name="employee" context="{'group_by': 'employee_id'}"/>
+                    <filter string="Mức rủi ro" name="risk" context="{'group_by': 'risk_level'}"/>
+                    <filter string="Tháng" name="month" context="{'group_by': 'period_start:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="view_hr_attendance_alert_graph" model="ir.ui.view">
+        <field name="name">hr.attendance.alert.graph</field>
+        <field name="model">hr.attendance.alert</field>
+        <field name="arch" type="xml">
+            <graph string="Rủi ro chấm công" type="bar">
+                <field name="department_id"/>
+                <field name="risk_score" type="measure"/>
+                <field name="total_violation_minutes" type="measure"/>
+                <field name="id" type="measure" string="Số cảnh báo"/>
+            </graph>
+        </field>
+    </record>
+    <record id="view_hr_attendance_alert_pivot" model="ir.ui.view">
+        <field name="name">hr.attendance.alert.pivot</field>
+        <field name="model">hr.attendance.alert</field>
+        <field name="arch" type="xml">
+            <pivot string="Tổng hợp rủi ro chấm công">
+                <field name="department_id" type="row"/>
+                <field name="risk_level" type="col"/>
+                <field name="risk_score" type="measure"/>
+                <field name="total_violation_minutes" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="action_hr_attendance_alert_analysis" model="ir.actions.act_window">
+        <field name="name">Phân tích rủi ro chấm công</field>
+        <field name="res_model">hr.attendance.alert</field>
+        <field name="view_mode">graph,pivot,tree,form</field>
+        <field name="search_view_id" ref="view_hr_attendance_alert_search_analysis"/>
+        <field name="context">{'graph_mode': 'bar'}</field>
+    </record>
+    <menuitem id="menu_hr_attendance_alert_analysis" name="Phân tích rủi ro" action="action_hr_attendance_alert_analysis" groups="hr_data_analysis.group_hr_data_analysis_manager" sequence="72"/>
+
+    <record id="view_hr_attendance_search_analysis" model="ir.ui.view">
+        <field name="name">hr.attendance.search.analysis</field>
+        <field name="model">hr.attendance</field>
+        <field name="arch" type="xml">
+            <search string="Báo cáo chấm công">
+                <field name="employee_id"/>
+                <filter string="Đi muộn" name="late" domain="[('so_phut_di_muon', '&gt;', 0)]"/>
+                <filter string="Về sớm" name="early_leave" domain="[('so_phut_ve_som', '&gt;', 0)]"/>
+                <filter string="Chưa check-out" name="missing_checkout" domain="[('thieu_check_out', '=', True)]"/>
+                <group expand="0" string="Nhóm theo">
+                    <filter string="Nhân viên" name="employee" context="{'group_by': 'employee_id'}"/>
+                    <filter string="Ngày check-in" name="day" context="{'group_by': 'check_in:day'}"/>
+                    <filter string="Trạng thái" name="status" context="{'group_by': 'trang_thai_cham_cong'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="view_hr_attendance_graph_analysis" model="ir.ui.view">
+        <field name="name">hr.attendance.graph.analysis</field>
+        <field name="model">hr.attendance</field>
+        <field name="arch" type="xml">
+            <graph string="Báo cáo chấm công" type="line">
+                <field name="check_in" interval="day"/>
+                <field name="so_phut_di_muon" type="measure"/>
+                <field name="so_phut_ve_som" type="measure"/>
+                <field name="so_phut_lam_thieu" type="measure"/>
+            </graph>
+        </field>
+    </record>
+    <record id="view_hr_attendance_pivot_analysis" model="ir.ui.view">
+        <field name="name">hr.attendance.pivot.analysis</field>
+        <field name="model">hr.attendance</field>
+        <field name="arch" type="xml">
+            <pivot string="Tổng hợp chấm công">
+                <field name="employee_id" type="row"/>
+                <field name="trang_thai_cham_cong" type="col"/>
+                <field name="so_phut_di_muon" type="measure"/>
+                <field name="so_phut_ve_som" type="measure"/>
+                <field name="so_phut_lam_thieu" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="action_hr_attendance_analysis" model="ir.actions.act_window">
+        <field name="name">Báo cáo chấm công</field>
+        <field name="res_model">hr.attendance</field>
+        <field name="view_mode">graph,pivot,tree,form</field>
+        <field name="search_view_id" ref="view_hr_attendance_search_analysis"/>
+        <field name="context">{'graph_mode': 'line'}</field>
+    </record>
+    <menuitem id="menu_hr_attendance_analysis" name="Báo cáo chấm công" action="action_hr_attendance_analysis" groups="hr_data_analysis.group_hr_data_analysis_manager" sequence="73"/>
+</odoo>

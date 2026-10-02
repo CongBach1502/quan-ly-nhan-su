@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <!-- Nhân viên chỉ xem giải trình do mình tạo -->
+    <record id="rule_giai_trinh_di_muon_nhan_vien" model="ir.rule">
+        <field name="name">Nhân viên - Giải trình đi muộn của mình</field>
+        <field name="model_id" ref="model_hr_giai_trinh_di_muon"/>
+        <field name="groups" eval="[(4, ref('hr_data_analysis.group_hr_data_analysis_employee'))]"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+    </record>
+
+    <!-- Quản lý nhân sự được xem tất cả -->
+    <record id="rule_giai_trinh_di_muon_quan_ly" model="ir.rule">
+        <field name="name">Quản lý nhân sự - Tất cả giải trình</field>
+        <field name="model_id" ref="model_hr_giai_trinh_di_muon"/>
+        <field name="groups" eval="[(4, ref('hr_data_analysis.group_hr_data_analysis_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+</odoo>

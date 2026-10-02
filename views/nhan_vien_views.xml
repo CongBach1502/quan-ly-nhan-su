@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <!-- ============================= -->
+    <!-- 1. Bổ sung thông tin nhân viên -->
+    <!-- ============================= -->
+
+    <record id="view_employee_form_inherit_data_analysis"
+            model="ir.ui.view">
+
+        <field name="name">hr.employee.form.inherit.data.analysis</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='work_phone']"
+                   position="after">
+
+                <field name="employee_code"/>
+                <field name="education_level"/>
+                <field name="work_location"/>
+
+            </xpath>
+
+        </field>
+
+    </record>
+
+
+    <!-- ====================================== -->
+    <!-- 2. Nút nhập nhân viên từ Excel -->
+    <!-- ====================================== -->
+
+    
+
+</odoo>

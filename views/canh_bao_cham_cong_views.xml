@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_attendance_alert_tree" model="ir.ui.view">
+        <field name="name">hr.attendance.alert.tree</field>
+        <field name="model">hr.attendance.alert</field>
+        <field name="arch" type="xml">
+            <tree string="Cảnh báo chấm công">
+                <field name="employee_id"/>
+                <field name="period_start"/>
+                <field name="period_end"/>
+                <field name="late_count"/>
+                <field name="late_minutes"/>
+                <field name="early_leave_count"/>
+                <field name="early_leave_minutes"/>
+                <field name="total_violation_minutes"/>
+                <field name="risk_score"/>
+                <field name="risk_level"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_hr_attendance_alert_form" model="ir.ui.view">
+        <field name="name">hr.attendance.alert.form</field>
+        <field name="model">hr.attendance.alert</field>
+        <field name="arch" type="xml">
+            <form string="Cảnh báo chấm công">
+                <header><field name="state" widget="statusbar" statusbar_visible="new,reminded,monitoring,resolved"/></header>
+                <sheet>
+                    <group><field name="employee_id"/><field name="period_start"/><field name="period_end"/></group>
+                    <group string="Thống kê vi phạm"><field name="late_count"/><field name="late_minutes"/><field name="early_leave_count"/><field name="early_leave_minutes"/><field name="total_violation_minutes"/></group>
+                    <group string="Đánh giá rủi ro"><field name="risk_score"/><field name="risk_level"/></group>
+                    <group string="Xử lý"><field name="note"/></group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_hr_attendance_alert" model="ir.actions.act_window">
+        <field name="name">Cảnh báo chấm công</field><field name="res_model">hr.attendance.alert</field><field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_generate_hr_attendance_alert" model="ir.actions.server">
+        <field name="name">Tạo cảnh báo tháng hiện tại</field><field name="model_id" ref="model_hr_attendance_alert"/><field name="state">code</field><field name="code">action = env['hr.attendance.alert'].action_generate_current_month_alerts()</field>
+    </record>
+    <menuitem id="menu_generate_hr_attendance_alert" name="Tạo cảnh báo tháng này" action="action_generate_hr_attendance_alert" groups="hr_data_analysis.group_hr_data_analysis_manager" sequence="70"/>
+    <menuitem id="menu_hr_attendance_alert" name="Cảnh báo chấm công" action="action_hr_attendance_alert" groups="hr_data_analysis.group_hr_data_analysis_manager" sequence="71"/>
+    <record id="ir_cron_generate_hr_attendance_alert" model="ir.cron">
+        <field name="name">HR: Tạo cảnh báo chấm công tháng hiện tại</field><field name="model_id" ref="model_hr_attendance_alert"/><field name="state">code</field><field name="code">model.cron_generate_current_month_alerts()</field><field name="interval_number">1</field><field name="interval_type">days</field><field name="numbercall">-1</field><field name="active">True</field>
+    </record>
+</odoo>

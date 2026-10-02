@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_attendance_ai_insight_tree" model="ir.ui.view">
+        <field name="name">hr.attendance.ai.insight.tree</field>
+        <field name="model">hr.attendance.ai.insight</field>
+        <field name="arch" type="xml">
+            <tree string="AI Insights">
+                <header>
+                    <button
+                        name="action_generate_current_month_insights"
+                        type="object"
+                        string="Chạy lại AI Insight"
+                        class="oe_highlight"
+                        groups="hr_data_analysis.group_hr_data_analysis_manager"/>
+                </header>
+                <field name="title"/>
+                <field name="insight_type"/>
+                <field name="department_id"/>
+                <field name="period_start"/>
+                <field name="period_end"/>
+                <field name="priority"/>
+                <field name="generated_at"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hr_attendance_ai_insight_form" model="ir.ui.view">
+        <field name="name">hr.attendance.ai.insight.form</field>
+        <field name="model">hr.attendance.ai.insight</field>
+        <field name="arch" type="xml">
+            <form string="AI Insight">
+                <header>
+                    <button
+                        name="action_generate_current_month_insights"
+                        type="object"
+                        string="Chạy lại AI Insight"
+                        class="oe_highlight"
+                        groups="hr_data_analysis.group_hr_data_analysis_manager"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="title"/>
+                        <field name="insight_type"/>
+                        <field name="department_id"/>
+                        <field name="period_start"/>
+                        <field name="period_end"/>
+                        <field name="priority"/>
+                        <field name="generated_at"/>
+                    </group>
+                    <group string="Nhận xét">
+                        <field name="analysis"/>
+                    </group>
+                    <group string="Gợi ý xử lý">
+                        <field name="recommendation"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hr_attendance_ai_insight" model="ir.actions.act_window">
+        <field name="name">AI Insights</field>
+        <field name="res_model">hr.attendance.ai.insight</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_generate_hr_attendance_ai_insight" model="ir.actions.server">
+        <field name="name">Tạo AI Insight tháng này</field>
+        <field name="model_id" ref="model_hr_attendance_ai_insight"/>
+        <field name="state">code</field>
+        <field name="code">action = env['hr.attendance.ai.insight'].action_generate_current_month_insights()</field>
+    </record>
+
+    <menuitem
+        id="menu_generate_hr_attendance_ai_insight"
+        name="Tạo AI Insight tháng này"
+        action="action_generate_hr_attendance_ai_insight"
+        groups="hr_data_analysis.group_hr_data_analysis_manager"
+        sequence="76"/>
+
+    <menuitem
+        id="menu_hr_attendance_ai_insight"
+        name="AI Insights"
+        action="action_hr_attendance_ai_insight"
+        groups="hr_data_analysis.group_hr_data_analysis_manager"
+        sequence="77"/>
+</odoo>

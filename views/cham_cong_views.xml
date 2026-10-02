@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="view_cham_cong_tree_custom" model="ir.ui.view">
+        <field name="name">hr.attendance.tree.custom</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='worked_hours']" position="after">
+
+                <field name="so_phut_di_muon"/>
+                <field name="trang_thai_cham_cong"/>
+                <field name="so_phut_ve_som"/>
+                <field name="so_phut_lam_thieu"/>
+                <field name="thieu_check_out"/>
+
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

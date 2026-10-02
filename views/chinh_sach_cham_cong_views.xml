@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_attendance_policy_tree" model="ir.ui.view">
+        <field name="name">hr.attendance.policy.tree</field>
+        <field name="model">hr.attendance.policy</field>
+        <field name="arch" type="xml">
+            <tree string="Chính sách chấm công">
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="department_id"/>
+                <field name="start_hour" widget="float_time"/>
+                <field name="end_hour" widget="float_time"/>
+                <field name="grace_minutes"/>
+                <field name="required_work_hours" widget="float_time"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hr_attendance_policy_form" model="ir.ui.view">
+        <field name="name">hr.attendance.policy.form</field>
+        <field name="model">hr.attendance.policy</field>
+        <field name="arch" type="xml">
+            <form string="Chính sách chấm công">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="department_id"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Khung giờ làm việc">
+                            <field name="start_hour" widget="float_time"/>
+                            <field name="end_hour" widget="float_time"/>
+                            <field name="grace_minutes"/>
+                            <field name="required_work_hours" widget="float_time"/>
+                        </group>
+                    </group>
+                    <group string="Ngưỡng cảnh báo trong tháng">
+                        <group><field name="late_occurrence_threshold"/><field name="late_minutes_threshold"/></group>
+                        <group><field name="early_leave_occurrence_threshold"/><field name="early_leave_minutes_threshold"/></group>
+                    </group>
+                    <group string="Ghi chú">
+                        <field name="note" placeholder="Ví dụ: Áp dụng cho giờ hành chính từ thứ Hai đến thứ Sáu."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hr_attendance_policy_search" model="ir.ui.view">
+        <field name="name">hr.attendance.policy.search</field>
+        <field name="model">hr.attendance.policy</field>
+        <field name="arch" type="xml">
+            <search string="Tìm chính sách chấm công">
+                <field name="name"/>
+                <field name="department_id"/>
+                <filter string="Đang áp dụng" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Ngừng áp dụng" name="inactive" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Nhóm theo">
+                    <filter string="Phòng ban" name="group_department" context="{'group_by': 'department_id'}"/>
+                    <filter string="Công ty" name="group_company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_hr_attendance_policy" model="ir.actions.act_window">
+        <field name="name">Chính sách chấm công</field>
+        <field name="res_model">hr.attendance.policy</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_hr_attendance_policy_search"/>
+    </record>
+
+    <menuitem id="menu_hr_attendance_policy"
+              name="Cấu hình chấm công"
+              action="action_hr_attendance_policy"
+              groups="hr_data_analysis.group_hr_data_analysis_manager"
+              sequence="60"/>
+</odoo>

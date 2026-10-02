@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_giai_trinh_di_muon_nhan_vien,Giải trình đi muộn - Nhân viên,model_hr_giai_trinh_di_muon,hr_data_analysis.group_hr_data_analysis_employee,1,1,1,0
+access_hr_giai_trinh_di_muon_quan_ly,Giải trình đi muộn - Quản lý nhân sự,model_hr_giai_trinh_di_muon,hr_data_analysis.group_hr_data_analysis_manager,1,1,1,1
+access_hr_attendance_policy_nhan_vien,Chính sách chấm công - Nhân viên,model_hr_attendance_policy,hr_data_analysis.group_hr_data_analysis_employee,1,0,0,0
+access_hr_attendance_policy_quan_ly,Chính sách chấm công - Quản lý nhân sự,model_hr_attendance_policy,hr_data_analysis.group_hr_data_analysis_manager,1,1,1,1
+access_hr_attendance_alert_quan_ly,Cảnh báo chấm công - Quản lý nhân sự,model_hr_attendance_alert,hr_data_analysis.group_hr_data_analysis_manager,1,1,1,1
+access_hr_attendance_cluster_quan_ly,Phân nhóm chấm công - Quản lý nhân sự,model_hr_attendance_cluster,hr_data_analysis.group_hr_data_analysis_manager,1,1,1,1
+access_hr_attendance_ai_insight_quan_ly,AI Insight chấm công - Quản lý nhân sự,model_hr_attendance_ai_insight,hr_data_analysis.group_hr_data_analysis_manager,1,1,1,1

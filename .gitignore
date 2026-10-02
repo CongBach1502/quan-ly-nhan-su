@@ -1,0 +1,11 @@
+# Python and editor files
+__pycache__/
+*.py[cod]
+.vscode/
+
+# Generated analysis results and report assets
+lamsach/output/
+lamsach/csv/
+report_diagrams/
+*.docx
+
